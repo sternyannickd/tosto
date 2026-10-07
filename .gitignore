@@ -1,0 +1,13 @@
+# Geheimnisse und Daten gehören nie ins Git
+/config/config.php
+/daten/
+*.env
+
+# Composer
+/vendor/
+
+# lokale Dateien
+ausgabe_ssh.txt
+.claude/settings.local.json
+.vscode/
+.idea/

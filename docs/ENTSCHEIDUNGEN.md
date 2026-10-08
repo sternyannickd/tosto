@@ -23,6 +23,7 @@ Grundlage: [`initial_prompt.md`](../initial_prompt.md) und
 | # | Thema | Entscheidung |
 |---|-------|--------------|
 | P1 | Rolle des Projekts | tosto platziert die Apps auf der Website. Die App-Repos werden von hier aus **nur gelesen**, nie geändert (08.10.2026). Ob tosto später die App-Projekte mitsteuert, ist offen. |
+| P2 | Arbeitsweise | Fragen werden **in der Datei** beantwortet. Nach jedem Schritt committen und pushen. Ein Thema je Sitzung. App-Repos vorerst nur lesen, später neu entscheiden (08.10.2026). |
 | A5 | Bedeutung des Namens | siehe V1 |
 | C2 | PHP-Version | Ok: in Plesk nach 8.3/8.4 für die Subdomain schauen. |
 | F2 | Alte Druckaufträge | Aufträge **verfallen nach 30 Minuten** und müssen neu ausgelöst werden. |

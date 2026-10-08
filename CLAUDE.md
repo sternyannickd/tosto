@@ -62,6 +62,8 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
   zu jeder Entscheidung.
 - Fragen an den Nutzer als Fragenkatalog in `fragen/NN-thema.md`: jede Frage mit
   **Empfehlung** und `→ Antwort:`-Zeile, blockierende Fragen mit ⚠️.
+  **Der Nutzer beantwortet die Fragen direkt in der Datei** und gibt Bescheid;
+  Claude überträgt die Antworten dann nach `docs/ENTSCHEIDUNGEN.md`.
 - Jede Entscheidung landet in `docs/ENTSCHEIDUNGEN.md` (Nummer aus dem
   Fragenkatalog, Entscheidung, ggf. Begründung).
 - **Die App-Repos (`../labels`, `../roast-archive`) sind von hier aus nur zum
@@ -69,4 +71,11 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
   Änderungen an den Apps (Web Component, Druckagent, Vorschau, Sync) passieren in
   den App-Projekten. `.claude/settings.json` sperrt Schreibzugriffe dorthin.
   Fragen, die eine App betreffen, werden hier nur notiert (`docs/FUER-APPS.md`).
+- **App-Repos: vorerst nur lesen.** Ob tosto sie später mitsteuert, wird neu
+  entschieden, sobald die Anbindung der Apps gebaut wird.
+- **Git:** nach jedem abgeschlossenen Schritt committen **und** auf GitHub
+  (`origin/main`) pushen, ohne nachzufragen. Das berührt den Server nicht.
+- **Ein Thema je Sitzung** (Plan, Subdomain, Login, …). Der Stand muss deshalb
+  immer in den Dateien stehen, nicht nur im Chat: Entscheidungen in
+  `docs/ENTSCHEIDUNGEN.md`, Server-Aufgaben in `docs/HOSTING.md`.
 - Vor einer Bereitstellung auf den Server immer nachfragen.

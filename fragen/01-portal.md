@@ -40,7 +40,7 @@ Geheimnisse kommen so oder so nicht ins Git.
 
 **A5. Was bedeutet „tosto“, und soll es ein Logo / einen Schriftzug geben?**
 Empfehlung: Fürs Erste nur der Schriftzug „tosto“ in der Hausschrift, Logo später.
-→ Antwort:
+→ Antwort: TOSTO = Tools Of Specialty Tasting & rOasting
 
 ## B. Mehrere Apps – der Aufbau
 
@@ -117,7 +117,7 @@ Daten) liegt daneben und ist nicht öffentlich. Siehe [`docs/HOSTING.md`](../doc
 Auf der Kommandozeile läuft PHP 8.1. Das bekommt vom PHP-Projekt keine
 Sicherheitsupdates mehr (Ubuntu pflegt es noch).
 Empfehlung: In Plesk **8.3 oder 8.4** wählen, falls vorhanden. Der Code läuft ab 8.1.
-→ Antwort:
+→ Antwort: Ok, ich halte danach Ausschau. Subdomain anlegen erklärt Claude später.
 
 **C3. Datenordner: ist `/var/www/vhosts/<webspace>/tosto-daten/` ok?**
 Empfehlung: **Ja**, neben dem Code, außerhalb jedes Webverzeichnisses.
@@ -247,7 +247,7 @@ nächsten Morgen würden sie plötzlich herauskommen, mit dem MHD von gestern.
 Empfehlung: Aufträge **verfallen nach 30 Minuten** (Status „verfallen“) und müssen
 neu ausgelöst werden. Ist der Agent offline, warnt die Oberfläche **vor** dem
 Absenden.
-→ Antwort:
+→ Antwort: Ja, Aufträge verfallen nach 30 Min.
 
 **F3. Darf man wartende Aufträge abbrechen?**
 Empfehlung: **Ja**, solange sie „wartet“ sind. Danach nicht mehr.
@@ -263,7 +263,7 @@ Im neuen Aufbau erzeugt nur noch der Agent ZPL, der Server nicht.
 - (d) Keine Vorschau im Portal.
 
 Empfehlung: **(a)**. Für die genaue Vorschau gibt es den Testdruck.
-→ Antwort:
+→ Antwort: Ich will eine Vorschau in der Web-App. Serverseitig ZPL bauen, ohne es zum Drucken zu verwenden. Details klärt das labels-Projekt.
 
 **F5. Wo werden Produkte gepflegt?**
 Empfehlung: **Im Portal** (Liste mit Bearbeiten, nur mit Recht *verwalten*),
@@ -312,7 +312,7 @@ PHP erst lesen lernen müsste.
 
 Empfehlung: **(a)**, ein kleiner Befehl `roast-archive sync` (automatisch nach
 `archive`). Bis der fertig ist, geht (c).
-→ Antwort:
+→ Antwort: Überlege ich mir später.
 
 **G3. Nach dem Umzug: Ist das Portal der einzige Ort für Cupping-Daten?**
 Empfehlung: **Ja.** Die vorhandenen Dateien (`roast-registry.json`,

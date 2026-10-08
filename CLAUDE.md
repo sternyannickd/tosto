@@ -1,4 +1,7 @@
-# tosto – Portal für die Apps der Rösterei
+# TOSTO – Portal für die Apps der Rösterei
+
+**TOSTO** steht für **T**ools **O**f **S**pecialty **T**asting & r**O**asting.
+Im Code, in Pfaden und Adressen klein: `tosto`.
 
 `tosto` ist die Website (Subdomain auf dem Plesk-Webspace), über die alle kleinen
 Web-Apps der Rösterei mit **einem Login** erreichbar sind: Anmeldung, danach eine
@@ -61,6 +64,9 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
   **Empfehlung** und `→ Antwort:`-Zeile, blockierende Fragen mit ⚠️.
 - Jede Entscheidung landet in `docs/ENTSCHEIDUNGEN.md` (Nummer aus dem
   Fragenkatalog, Entscheidung, ggf. Begründung).
-- Nichts in den App-Repos ändern, ohne dass es ausdrücklich gewünscht ist.
-  Änderungen dort (Web Component, Druckagent) passieren in den App-Projekten.
+- **Die App-Repos (`../labels`, `../roast-archive`) sind von hier aus nur zum
+  Lesen da.** Dieses Projekt platziert die Apps auf der Website, mehr nicht.
+  Änderungen an den Apps (Web Component, Druckagent, Vorschau, Sync) passieren in
+  den App-Projekten. `.claude/settings.json` sperrt Schreibzugriffe dorthin.
+  Fragen, die eine App betreffen, werden hier nur notiert (`docs/FUER-APPS.md`).
 - Vor einer Bereitstellung auf den Server immer nachfragen.

@@ -1,4 +1,6 @@
-# tosto
+# TOSTO
+
+**T**ools **O**f **S**pecialty **T**asting & r**O**asting
 
 Das Portal für die Web-Apps der Rösterei: ein Login, danach eine Kachel pro App.
 Nur für Mitarbeitende.

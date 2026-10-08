@@ -1,8 +1,14 @@
 {
   "permissions": {
     "additionalDirectories": [
-      "C:\Users\yannickdengler\Documents\claude projects\labels",
-      "C:\Users\yannickdengler\Documents\claude projects\roast-archive"
+      "C:\\Users\\yannickdengler\\Documents\\claude projects\\labels",
+      "C:\\Users\\yannickdengler\\Documents\\claude projects\\roast-archive"
+    ],
+    "deny": [
+      "Edit(//c/Users/yannickdengler/Documents/claude projects/labels/**)",
+      "Write(//c/Users/yannickdengler/Documents/claude projects/labels/**)",
+      "Edit(//c/Users/yannickdengler/Documents/claude projects/roast-archive/**)",
+      "Write(//c/Users/yannickdengler/Documents/claude projects/roast-archive/**)"
     ]
   }
 }

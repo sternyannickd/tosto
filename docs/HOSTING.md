@@ -30,6 +30,11 @@ eigenem Webverzeichnis (Frage C1).
 - Die PHP-Version im Panel (Web) kann von der auf der Kommandozeile abweichen.
   Nach dem Einrichten der Subdomain mit einer kleinen Prüfseite kontrollieren.
 
+## Noch zu tun
+
+- [ ] **Subdomain anlegen** – gemeinsam, Schritt für Schritt (Claude erklärt).
+      Dabei: PHP 8.3/8.4 wählen, Webverzeichnis `tosto/public`, SSL-Zertifikat.
+
 ## Geplante Ordner auf dem Server (Vorschlag)
 
 ```

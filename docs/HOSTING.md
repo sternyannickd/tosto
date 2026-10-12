@@ -86,6 +86,7 @@ kann (Bildschirm und Tastatur anstecken).
 ## Noch zu tun (gemeinsam, Schritt für Schritt)
 
 - [x] Server-Fakten sammeln: `scripts/server-fakten.sh` → `lokal/server-fakten.txt` (12.10.2026)
+- [ ] Befristete sudo-Regel `/etc/sudoers.d/90-tosto-einrichtung` für `serveradmin` (B2.1). **Nach der Einrichtung am Domain Controller wieder löschen!**
 - [ ] VM anlegen (nach Antwort auf B1), Drucker per USB durchreichen
 - [ ] DNS-Eintrag in FreeIPA, Weiterleitung im Router einrichten
 - [ ] HTTPS-Zertifikat einrichten

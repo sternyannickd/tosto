@@ -10,6 +10,33 @@ Antwortzeile. Fragen mit ⚠️ blockieren den Bau – die zuerst klären.
 
 ## A. Grundsätzliches
 
+**A0. ⚠️ Wo wird gehostet? (Diese Frage entscheidet fast alles andere.)**
+- (a) **Plesk-Webspace** im Internet: von überall erreichbar (mit Login, evtl.
+  IP-Sperre), aber nur PHP. Die Server-Seite beider Apps muss in PHP neu
+  geschrieben werden, für den Drucker braucht es einen Druckagenten in der Rösterei.
+- (b) **Firmenserver** (Minisforum, AlmaLinux, FreeIPA) im Netz der Rösterei:
+  Die Apps bleiben in Python, der Drucker hängt direkt am Server, kein Druckagent,
+  keine Warteschlange über das Internet. Von außen nur per VPN. Der Server ist
+  aber Domain Controller, deshalb laufen die Apps dort abgeschottet (Podman-
+  Container als Benutzer ohne Rechte), siehe [`docs/HOSTING.md`](../docs/HOSTING.md).
+
+Empfehlung: **(b)**, wenn niemand von unterwegs ohne VPN zugreifen muss. Deutlich
+weniger Arbeit, Drucker und Archivordner sind direkt erreichbar, nichts hängt im
+Internet. Die Konventionen (Web Component, CSS-Variablen, Anmeldung über eine
+Schnittstelle) bleiben gleich, damit die Apps später trotzdem in die Website des
+Chefs passen.
+→ Antwort:
+
+**A0.1. Interner Name (nur bei b):** `tosto.intern.stern-kaffee.de` (echtes
+HTTPS-Zertifikat über Let's Encrypt möglich) oder `tosto.internal` (Zertifikat von
+der FreeIPA-CA, muss auf Tablets/Handys installiert werden)? `.local` geht nicht.
+Empfehlung: **Unteradresse der echten Domain.** Dafür klären: Wo wird die Domain
+verwaltet, und hat der Anbieter eine DNS-API?
+→ Antwort:
+
+**A0.2. Steht der Server dauerhaft an, und gibt es eine USV (Notstrom)?**
+→ Antwort:
+
 **A1. ⚠️ Unter welcher Adresse soll tosto laufen?**
 Der Webspace heißt laut SSH-Ausgabe nach dem Plesk-Server. Soll das Portal dort als
 Subdomain laufen (z. B. `tosto.<webspace>`) oder unter einer Domain der Rösterei

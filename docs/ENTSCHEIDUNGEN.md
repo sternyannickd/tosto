@@ -24,13 +24,15 @@ Grundlage: [`initial_prompt.md`](../initial_prompt.md) und
 |---|-------|--------------|
 | P1 | Rolle des Projekts | tosto platziert die Apps auf der Website. Die App-Repos werden von hier aus **nur gelesen**, nie geändert (08.10.2026). Ob tosto später die App-Projekte mitsteuert, ist offen. |
 | P2 | Arbeitsweise | Fragen werden **in der Datei** beantwortet. Nach jedem Schritt committen und pushen. Ein Thema je Sitzung. App-Repos vorerst nur lesen, später neu entscheiden (08.10.2026). |
+| P3 | Schnittstelle | Die Projekte sprechen über Schnittstellen-Dateien: tosto schreibt `../<app>/TOSTO.md`, die App schreibt `schnittstelle/<app>.md`. Jede Datei hat einen Schreiber, der Empfänger committet. Ein Hook sperrt alles andere. Ersetzt „App-Repos nur lesen“ aus P1/P2 (12.10.2026). |
 | A5 | Bedeutung des Namens | siehe V1 |
 | C2 | PHP-Version | Ok: in Plesk nach 8.3/8.4 für die Subdomain schauen. |
 | F2 | Alte Druckaufträge | Aufträge **verfallen nach 30 Minuten** und müssen neu ausgelöst werden. |
-| F4 | Vorschau | **Die Web-App bekommt eine Vorschau.** Idee: Der Server erzeugt ZPL nur für die Vorschau, gedruckt wird weiter das ZPL des Agenten. Wie genau, entscheidet das labels-Projekt (siehe `docs/FUER-APPS.md`). |
+| F4 | Vorschau | **Die Web-App bekommt eine Vorschau.** Idee: Der Server erzeugt ZPL nur für die Vorschau, gedruckt wird weiter das ZPL des Agenten. Wie genau, entscheidet das labels-Projekt (Nachricht T2 in `../labels/TOSTO.md`). |
 
 ## Offene Punkte
 
+- **A0** Hosting-Ort: Plesk oder Firmenserver (AlmaLinux/FreeIPA).
 - **G2** Wie die Röstungen (`.alog`) ins Portal kommen: wird später überlegt.
 - **Subdomain in Plesk anlegen:** Anleitung Schritt für Schritt, wenn es so weit
   ist (gewünscht am 08.10.2026, siehe `docs/HOSTING.md`).

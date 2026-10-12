@@ -25,6 +25,7 @@ Entscheidungen in [`docs/ENTSCHEIDUNGEN.md`](docs/ENTSCHEIDUNGEN.md).
 | [`docs/HOSTING.md`](docs/HOSTING.md) | Fakten zum Server (PHP-Version, Erweiterungen, Pfade) |
 | [`docs/ENTSCHEIDUNGEN.md`](docs/ENTSCHEIDUNGEN.md) | Was entschieden ist und warum, offene Punkte |
 | [`fragen/`](fragen/) | Fragenkataloge mit Empfehlung und Antwortzeile |
+| [`schnittstelle/`](schnittstelle/) | Nachrichten der Apps an tosto, Regeln der Schnittstelle |
 
 ## Zugehörige Projekte
 
@@ -39,8 +40,9 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
 
 ## Feste Rahmenbedingungen
 
-- **Server: nur PHP** (8.1 auf der Kommandozeile, siehe `docs/HOSTING.md`). Kein
-  Node.js, kein Python auf dem Server. Kein Build-Schritt: was im Repo liegt, wird
+- **Hosting noch offen (Frage A0):** Plesk (dann **nur PHP**, kein Node.js, kein
+  Python) oder der eigene Firmenserver (AlmaLinux, dann Python möglich). Siehe
+  `docs/HOSTING.md`. Kein Build-Schritt: was im Repo liegt, wird
   so ausgeliefert.
 - **Keine Datenbank.** JSON-Dateien, atomar geschrieben (temporäre Datei + `rename`)
   und mit `flock` gesperrt.
@@ -66,13 +68,15 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
   Claude überträgt die Antworten dann nach `docs/ENTSCHEIDUNGEN.md`.
 - Jede Entscheidung landet in `docs/ENTSCHEIDUNGEN.md` (Nummer aus dem
   Fragenkatalog, Entscheidung, ggf. Begründung).
-- **Die App-Repos (`../labels`, `../roast-archive`) sind von hier aus nur zum
-  Lesen da.** Dieses Projekt platziert die Apps auf der Website, mehr nicht.
-  Änderungen an den Apps (Web Component, Druckagent, Vorschau, Sync) passieren in
-  den App-Projekten. `.claude/settings.json` sperrt Schreibzugriffe dorthin.
-  Fragen, die eine App betreffen, werden hier nur notiert (`docs/FUER-APPS.md`).
-- **App-Repos: vorerst nur lesen.** Ob tosto sie später mitsteuert, wird neu
-  entschieden, sobald die Anbindung der Apps gebaut wird.
+- **Schnittstelle zu den App-Repos** ([`schnittstelle/README.md`](schnittstelle/README.md)):
+  `../labels` und `../roast-archive` werden nur gelesen, mit einer Ausnahme:
+  Nachrichten an eine App schreibt tosto in **`../<app>/TOSTO.md`** (dort nicht
+  committen). Die Apps antworten in **`schnittstelle/<app>.md`** hier. Ein Hook
+  (`.claude/hooks/schnittstelle.py`) sperrt alle anderen Schreibzugriffe.
+- **Zu Beginn jeder Sitzung** `git status` prüfen: Ist `schnittstelle/*.md`
+  geändert, hat eine App etwas mitgeteilt. Lesen, übernehmen, mitcommitten.
+- Änderungen an den Apps selbst (Web Component, Druckweg, Vorschau, Sync)
+  passieren in den App-Projekten, nie von hier aus.
 - **Git:** nach jedem abgeschlossenen Schritt committen **und** auf GitHub
   (`origin/main`) pushen, ohne nachzufragen. Das berührt den Server nicht.
 - **Ein Thema je Sitzung** (Plan, Subdomain, Login, …). Der Stand muss deshalb

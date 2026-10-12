@@ -15,7 +15,7 @@ Genaue Werte (IP-Adressen, Rechnernamen) stehen nur in `lokal/` und nie im Git.
 | FreeIPA | 4.13, Domäne `server.lan`. FreeIPA ist auch **DNS-Server** des Netzes |
 | Python | **3.12** ✔ (bestätigt 12.10.2026) |
 | Belegte Ports | 80/443 (FreeIPA-Apache), 22, LDAP, Kerberos, DNS, 8080/8443/8444 (u. a. Zertifizierungsstelle), 9090 (**Cockpit**) |
-| Weitere Dienste | **nginx läuft bereits** (Zweck noch unklar, Frage B8) |
+| Weitere Dienste | nginx auf Port 8444 für ein anderes Projekt (`/srv/company-client-config`), kein Konflikt |
 | Sicherheit | SELinux *enforcing*, firewalld aktiv |
 | Nicht installiert | podman, libvirt, cockpit-machines, lsusb |
 | Router | vermutlich FritzBox, Server mit fester Adresse |
@@ -26,27 +26,23 @@ Genaue Werte (IP-Adressen, Rechnernamen) stehen nur in `lokal/` und nie im Git.
 eine Oberfläche für den Server, und mit `cockpit-machines` lassen sich dort VMs
 anlegen und ansehen.
 
-## Geplanter Aufbau (Vorschlag, Fragen B1 und E1)
+## Geplanter Aufbau (B1: Podman, keine VM)
 
 ```
-Firmenserver (FreeIPA, unverändert)
-└── VM „tosto“ (AlmaLinux, eigene IP-Adresse, Drucker per USB durchgereicht)
-    ├── Caddy         HTTPS auf 443, fragt tosto vor jeder Anfrage nach der Anmeldung
-    ├── tosto         Anmeldung (FreeIPA-Konten), Übersicht, Design
-    ├── labels        Python-Dienst auf 127.0.0.1
-    └── roast-archive Python-Dienst auf 127.0.0.1
+Firmenserver (FreeIPA unverändert, Ports 80/443 bleiben bei FreeIPA)
+└── Podman
+    ├── Caddy         HTTPS auf 443, eigene Adresse im Netz (Nachfrage N1)
+    ├── tosto         Anmeldung (eigene Konten), Übersicht, Design
+    ├── labels        Python-Dienst, Drucker 1 per USB durchgereicht
+    └── roast-archive Python-Dienst
 ```
 
-**Warum eine VM:** Der Server ist Domain Controller. Eine Lücke in einer Web-App
-darf nicht zu FreeIPA führen. Die VM trennt das vollständig, bekommt eine eigene
-IP-Adresse (kein Konflikt mit FreeIPAs Ports 80/443) und lässt sich getrennt
-sichern und aktualisieren.
-
-**Netzwerk der VM:** Damit die VM eine eigene Adresse im Netz hat **und** FreeIPA
-erreicht (Anmeldung, DNS), braucht der Server eine **Netzwerkbrücke**. Das ändert
-die Netzwerkeinstellung des Domain Controllers. Geht dabei etwas schief, ist der
-Server nicht mehr per SSH erreichbar. Deshalb nur, wenn jemand vor Ort an den Server
-kann (Bildschirm und Tastatur anstecken).
+- Die Container sind nur über Caddy erreichbar, nie direkt.
+- Jeder Container hat nur seinen eigenen Datenordner, läuft innen als Benutzer ohne
+  Rechte und ist durch SELinux eingeschränkt.
+- **Port-Konflikt:** FreeIPA belegt 80/443. Lösung offen (Nachfrage N1): eigene
+  Adresse für den Caddy-Container (macvlan, empfohlen) oder anderer Port.
+- Drucker 2 (Verpackungsetiketten) hängt an einem Client-PC, nicht am Server (N5).
 
 ## Zugang für Claude (Stand 12.10.2026)
 
@@ -87,7 +83,7 @@ kann (Bildschirm und Tastatur anstecken).
 
 - [x] Server-Fakten sammeln: `scripts/server-fakten.sh` → `lokal/server-fakten.txt` (12.10.2026)
 - [ ] Befristete sudo-Regel `/etc/sudoers.d/90-tosto-einrichtung` für `serveradmin` (B2.1). **Nach der Einrichtung am Domain Controller wieder löschen!**
-- [ ] VM anlegen (nach Antwort auf B1), Drucker per USB durchreichen
+- [ ] Podman installieren, Container-Netz nach N1 einrichten, Drucker per USB durchreichen
 - [ ] DNS-Eintrag in FreeIPA, Weiterleitung im Router einrichten
 - [ ] HTTPS-Zertifikat einrichten
 - [ ] Sicherung des Datenordners einrichten

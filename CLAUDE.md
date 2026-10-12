@@ -43,8 +43,10 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
 
 - **Hosting: Firmenserver** (Minisforum, AlmaLinux, FreeIPA-Domain-Controller),
   nur im Netz der Rösterei. Die Apps bleiben **Python**, der Drucker hängt per USB
-  am Server. Weil der Server Domain Controller ist, laufen die Apps **abgeschottet**
-  (Vorschlag: eigene VM, Frage B1). Siehe `docs/HOSTING.md`.
+  am Server. Weil der Server Domain Controller ist, laufen die Apps **abgeschottet in
+  Podman-Containern** (keine VM). Siehe `docs/HOSTING.md`.
+- **Entwicklermodus:** tosto und jede App lassen sich lokal starten und sehen dabei
+  genauso aus wie auf dem Server (`KONVENTIONEN.md` Abschnitt 9).
 - **Kein Build-Schritt:** was im Repo liegt, wird so ausgeliefert.
 - **Keine Datenbank.** JSON-Dateien, atomar geschrieben (temporäre Datei + `rename`)
   und mit `flock` gesperrt.

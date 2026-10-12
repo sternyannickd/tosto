@@ -120,3 +120,23 @@ Druckagenten kommt in `docs/API-DRUCKAGENT.md`.
 
 Eine neue App = ein neuer Dienst plus ihr Manifest. Am
 Portal-Kern ändert sich dafür nichts.
+
+## 9. Entwicklermodus (Entwurf)
+
+Ziel: tosto und jede App lassen sich **lokal** starten und sehen dabei **genauso aus
+und verhalten sich genauso** wie auf dem Server.
+
+- **App allein:** Jede App hat einen Startbefehl für die Entwicklung (z. B.
+  `python -m etiketten dev`). Er startet die App auf `127.0.0.1` und zeigt sie in
+  einer Entwicklerseite **im tosto-Rahmen**: dieselbe `theme.css`, dieselbe
+  Kopfzeile, dieselben Schriften. Den Rahmen liest die App aus `../tosto/rahmen/`
+  (Pfad einstellbar). Fehlt tosto, läuft sie mit ihren eigenen Standardwerten.
+- **tosto lokal:** `python -m tosto dev` startet das Portal mit Testkonten und
+  leitet `/apps/<id>/` an die lokal laufenden Apps weiter, nach denselben Manifesten
+  und Regeln wie auf dem Server.
+- **Gleiche Grundlage:** Python 3.12 wie auf dem Server, Testdaten in einem eigenen
+  Datenordner, nie die echten Daten.
+- **Drucker:** Im Entwicklermodus druckt eine App standardmäßig in Dateien
+  (labels: `transport = "datei"`), ein echter Drucker nur auf ausdrücklichen Wunsch.
+- Vor einer Bereitstellung können dieselben Container auch lokal getestet werden
+  (optional, später).

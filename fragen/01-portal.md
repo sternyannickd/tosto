@@ -18,7 +18,7 @@ sind schon beantwortet und stehen nur zur Übersicht da.
 vermutlich `tosto.internal.stern-kaffee.de`?**
 Empfehlung: **`tosto.internal.stern-kaffee.de`**. Diesen Namen kennt nur das DNS in
 der Rösterei, im Internet zeigt er nirgendwohin.
-→ Antwort:
+→ Antwort: tosto.internal.stern-kaffee.de.
 
 **A3. ✅ Was bedeutet „tosto“?**
 → Antwort: TOSTO = Tools Of Specialty Tasting & rOasting
@@ -27,7 +27,7 @@ der Rösterei, im Internet zeigt er nirgendwohin.
 Ungefähre Zahl der Personen, und ob vor allem Tablets, eigene Handys im WLAN,
 Mint-PCs …
 Empfehlung: Oberfläche zuerst für **Tablet und Handy** bauen, am PC geht es dann auch.
-→ Antwort:
+→ Antwort: Ca. 10 Personen; Handys, Tablets und PCs. Oberfläche für alle Geräteklassen gut nutzbar gestalten, einschließlich PC.
 
 **A5. Gibt es Geräte, an denen mehrere Leute nacheinander arbeiten?**
 Beispiel: Ein Tablet liegt am Cuppingtisch. Wenn Anna sich morgens anmeldet und
@@ -36,16 +36,16 @@ Antwort meldet tosto auf solchen Geräten schneller ab, oder es gibt ein Konto
 „Tablet Cuppingtisch“.
 Empfehlung: **Persönliche Konten**, und auf gemeinsamen Geräten Abmeldung nach
 kurzer Pause (siehe D4).
-→ Antwort:
+→ Antwort: Persönliche Konten mit möglichst einfacher Anmeldung.
 
 **A6. Muss jemand von außerhalb der Rösterei zugreifen (von zu Hause, unterwegs)?**
 Empfehlung: **Vorerst nein.** Falls doch, später ein VPN am Router (z. B.
 WireGuard), tosto bleibt trotzdem nur intern erreichbar.
-→ Antwort:
+→ Antwort: Vorerst kein Zugriff von außerhalb der Rösterei.
 
 **A7. Sind die GitHub-Repos privat (tosto, labels, roast-archive)?**
 Empfehlung: **Ja, alle privat.** Der Server holt den Code später von dort.
-→ Antwort:
+→ Antwort: Ja, alle GitHub-Repos sind privat.
 
 ## B. Server und Betrieb
 
@@ -66,7 +66,7 @@ FreeIPA erreicht. Das ist eine Änderung am Netz des Domain Controllers und soll
 passieren, **wenn jemand vor Ort ist**, falls die Verbindung abbricht (B9).
 Empfehlung: **(a) VM.** Sicherheit hat Vorrang, und die eigene Adresse löst das
 Port-Problem sauber. Die Leistung reicht locker (28 GB RAM, 16 Threads).
-→ Antwort:
+→ Antwort: (b) Podman-Container direkt auf dem Server; keine VM.
 
 **B2. ✅ Wer führt die Befehle auf dem Server aus?**
 → Antwort: Claude per SSH von diesem PC aus, jeden Befehl bestätige ich.
@@ -83,27 +83,27 @@ Port-Problem sauber. Die Leistung reicht locker (28 GB RAM, 16 Threads).
 Empfehlung: **(a)**, befristet auf die Einrichtung am Domain Controller (VM, Brücke).
 In der VM bekommt Claude später einen eigenen Benutzer, da ist das weniger heikel,
 weil die VM vom Domain Controller getrennt ist.
-→ Antwort:
+→ Antwort: (a) Befristete sudo-Regel wie zuletzt eingerichtet; anschließend wieder entfernen. Jeder Befehl bleibt bestätigungspflichtig.
 
 **B3. Wie kommt neuer Code auf den Server?**
 Empfehlung: Ein Skript `scripts/bereitstellen.sh`. Es meldet sich per SSH als
 `tosto` in der VM an, holt dort einen **festen Stand** (Git-Tag) jeder App von
 GitHub (je Repo ein Schlüssel nur zum Lesen) und startet die Dienste neu.
 Zurückrollen = vorherigen Stand holen.
-→ Antwort:
+→ Antwort: Ja, wie empfohlen: scripts/bereitstellen.sh, feste Git-Tags, separate Read-only-Schlüssel pro Repo und Neustart der Dienste; Rollback über vorherigen Stand.
 
 **B4. Läuft der Server rund um die Uhr? Gibt es eine USV (Notstrom)?**
-→ Antwort:
+→ Antwort: Der Server läuft rund um die Uhr. Keine USV; ein Stromausfall ist für den vorgesehenen Einsatz akzeptabel.
 
 **B5. Wie wird der Server heute gesichert, und wohin könnte eine tägliche Kopie der
 tosto-Daten gehen (NAS, Nextcloud, externe Platte)?**
 Empfehlung: Täglich eine Kopie des Datenordners, 30 Tage aufheben, mindestens eine
 Kopie nicht auf dem Server selbst.
-→ Antwort:
+→ Antwort: Tägliche Sicherung des Datenordners, Aufbewahrung 30 Tage. Ziel noch offen; wahrscheinlich Nextcloud oder NAS, später festlegen.
 
 **B6. Darf der Server ins Internet (Updates, Let's Encrypt, Vorschau über
 labelary.com)?**
-→ Antwort:
+→ Antwort: Ja, Internetzugriff für Updates, Let’s Encrypt und Labelary-Vorschau ist erlaubt und gewünscht.
 
 **B7. ✅ Fakten zum Server**
 → Erledigt am 12.10.2026, Zusammenfassung in `docs/HOSTING.md`. Python 3.12 ✔.
@@ -111,11 +111,11 @@ labelary.com)?**
 **B8. Auf dem Server läuft bereits nginx (und es gibt eine Gruppe `ccc-release`).
 Wofür? Gehört das zu deinem anderen Projekt?**
 Wozu: Damit tosto nichts in die Quere kommt.
-→ Antwort:
+→ Antwort: Vermutlich gehören nginx und ccc-release zu einem anderen Projekt; noch ungeklärt.
 
 **B9. Kommt jemand an den Server heran, falls bei der Einrichtung die
 Netzwerkverbindung abbricht (Bildschirm und Tastatur anstecken)?**
-→ Antwort:
+→ Antwort: Ja, Bildschirm und Tastatur sind angeschlossen und vor Ort verfügbar.
 
 ## C. DNS und HTTPS
 
@@ -127,7 +127,7 @@ Domain. tosto muss dafür **nicht** aus dem Internet erreichbar sein.
 Empfehlung: Wenn der Anbieter eine API hat: Let's Encrypt, Erneuerung automatisch.
 Sonst: Zertifikat von der FreeIPA-Zertifizierungsstelle, das dann auf jedem Gerät
 einmal installiert werden muss.
-→ Antwort:
+→ Antwort: Die Domain stern-kaffee.de wird bei STRATO verwaltet. Ob eine DNS-API verfügbar ist, ist unbekannt und muss später geprüft werden; bitte die Auswirkungen und Optionen anschließend erklären.
 
 **C2. ⚠️ Wie finden Tablets und Handys die Adresse?**
 Die Adressen im Netz sehen nach einer **FritzBox** aus. Tablets und Handys fragen
@@ -142,7 +142,7 @@ Anfragen nicht gezielt an FreeIPA weiterreichen.
 
 Empfehlung: **(a)**, einfach und robust. Bitte bestätigen: Ist es eine FritzBox, und
 kommst du an die Verwaltung der Domain (siehe C1)?
-→ Antwort:
+→ Antwort: Die einfachste zuverlässige Lösung bevorzugen. Alle Geräte im lokalen Netz sollen über den Server die intern gehostete Website erreichen. Die konkrete DNS-Variante nach Prüfung festlegen.
 
 ## D. Anmeldung und Sicherheit
 
@@ -156,31 +156,31 @@ kommst du an die Verwaltung der Domain (siehe C1)?
 Empfehlung: **(a)**. Wer nur am Tablet arbeitet und noch kein Konto hat, bekommt
 ein FreeIPA-Konto (muss sich nie an einem PC anmelden). Bitte prüfen: Haben alle,
 die tosto nutzen sollen, ein FreeIPA-Konto?
-→ Antwort:
+→ Antwort: Eigene tosto-Konten mit einfacher Username-/Passwort-Anmeldung. Im MVP soll der Zugriff von Geräten im WLAN unkompliziert sein; FreeIPA ist dafür nicht vorausgesetzt. Zunächst einfache Konten, Details später weiterentwickeln.
 
 **D2. 2FA (Code aus einer Authenticator-App)?**
 Empfehlung: **Pflicht für Admins**, für alle anderen optional. tosto ist nur intern
 erreichbar, das senkt das Risiko.
-→ Antwort:
+→ Antwort: 2FA im ersten Schritt nicht einsetzen.
 
 **D3. Wer ist Admin?**
 Empfehlung: Du, und höchstens eine Person als Vertretung.
-→ Antwort:
+→ Antwort: Ich bin Admin; mein Chef hat grundsätzlich ebenfalls alle Zugänge.
 
 **D4. Wie lange gilt eine Anmeldung?**
 Empfehlung: Abmeldung nach **60 Minuten ohne Aktivität**, spätestens nach **12
 Stunden**. Auf gemeinsamen Geräten (A5) kürzer, z. B. 15 Minuten.
-→ Antwort:
+→ Antwort: Abmeldung nach 60 Minuten ohne Aktivität.
 
 **D5. Rechte pro App?**
 Empfehlung: Je App zwei Stufen, **benutzen** und **verwalten** (z. B. Produkte und
 Haltbarkeiten ändern, Cupper-Listen pflegen). Mehr erst, wenn jemand es braucht.
-→ Antwort:
+→ Antwort: Im MVP keine Rollen- oder Rechtebeschränkungen: Alle dürfen alle Apps nutzen und verwalten. Architektur so vorbereiten, dass Rechte später ergänzt werden können.
 
 **D6. Wie lange werden Login-Protokoll und Druckprotokoll aufgehoben?**
 Empfehlung: **Login-Protokoll 90 Tage** (personenbezogen). **Druckprotokoll
 unbegrenzt** (Nachweis für Chargen und MHD).
-→ Antwort:
+→ Antwort: Login-Protokolle 90 Tage, Druckprotokolle unbegrenzt aufbewahren.
 
 ## E. Aufbau mit mehreren Apps
 
@@ -197,32 +197,32 @@ Jede App läuft als eigener Dienst und ist nur über den Webserver erreichbar. D
 Anmeldung prüft tosto **einmal zentral**, die Apps brauchen keine eigene. Eine neue
 App = ein neuer Dienst und ein Eintrag, kein Umbau an tosto.
 Empfehlung: **Ja.**
-→ Antwort:
+→ Antwort: Ja, wie empfohlen.
 
 **E2. Steht das Manifest einer App (Name, Kachel, Symbol, Start, Status) im
 App-Repo?**
 Empfehlung: **Ja.** tosto braucht dann für eine neue App nur „diese App mit diesem
 Stand einbinden“.
-→ Antwort:
+→ Antwort: Ja, das App-Manifest liegt im jeweiligen App-Repo.
 
 **E3. Statussymbol auf der Kachel (z. B. „Drucker bereit“) für alle Apps nach
 demselben Muster?**
 Empfehlung: **Ja.** Jede App kann `GET status` anbieten, grün oder rot mit kurzer
 Meldung.
-→ Antwort:
+→ Antwort: Ja, ein einheitliches Statusmuster für alle Apps.
 
 **E4. Welche weiteren Apps sind schon absehbar?**
 Nur Stichworte, damit die Konventionen nichts übersehen.
-→ Antwort:
+→ Antwort: Absehbar: eine zweite Etiketten-App für andere Etiketten; eventuell alternativ als Erweiterung von labels. Außerdem eventuell eine App für Kassenprotokolle.
 
 **E5. Sollen die Apps weiter auch ohne tosto laufen?**
 Empfehlung: **Zum Entwickeln ja** (lokal wie heute), **im Betrieb nur über tosto**.
 So gibt es keine zweiten Datenbestände.
-→ Antwort:
+→ Antwort: Ja. Apps sollen lokal im Entwicklungsmodus eigenständig laufen können; im Betrieb werden sie über tosto gehostet.
 
 **E6. Sprache im Code: Deutsch (wie labels) oder Englisch (wie roast-archive)?**
 Empfehlung: tosto **Deutsch**, jede App bleibt bei ihrer Sprache.
-→ Antwort:
+→ Antwort: Zunächst alle Apps auf Deutsch. roast-archive soll perspektivisch Deutsch und Englisch unterstützen.
 
 ## F. Design
 
@@ -230,16 +230,16 @@ Empfehlung: tosto **Deutsch**, jede App bleibt bei ihrer Sprache.
 Gibt es eine Website oder ein Corporate Design der Rösterei (Farben, Schriften,
 Logo)? Bitte Link oder Dateien.
 Empfehlung: Farben und Schrift von der Rösterei-Website übernehmen.
-→ Antwort:
+→ Antwort: Eigenständiges Design, nicht von der Rösterei-Website übernehmen. Gestaltung soll über eigene Prompts festgelegt werden; wichtig ist ein hochwertiges, gut aussehendes Ergebnis.
 
 **F2. Dunkles Design?**
 Empfehlung: **Automatisch nach Geräteeinstellung.**
-→ Antwort:
+→ Antwort: Ja, automatisch entsprechend der Geräteeinstellung.
 
 **F3. Übersicht:** Kopfzeile mit „tosto“, Name und Abmelden, darunter Kacheln
 (Symbol, Name, eine Zeile Beschreibung, Statuspunkt). Eine geöffnete App läuft
 unter einer Kopfzeile mit „← Übersicht“. Ok?
-→ Antwort:
+→ Antwort: Ja, wie beschrieben.
 
 ## G. Etikettendruck (labels)
 
@@ -252,26 +252,26 @@ unter einer Kopfzeile mit „← Übersicht“. Ok?
 **G3. Wo werden Produkte gepflegt?**
 Empfehlung: **In der Web-App** (Recht *verwalten*), statt in der CSV-Datei auf dem
 Server.
-→ Antwort:
+→ Antwort: Produkte in der Web-App pflegen. Im MVP gibt es noch keine Rollen/Rechte; alle können verwalten.
 
 **G4. Mehr als ein Drucker absehbar?**
-→ Antwort:
+→ Antwort: Für die aktuelle Anwendung ist kein weiterer Drucker absehbar. Für eine mögliche zweite Etiketten-App später separat prüfen; idealerweise sendet ein Skript der bedienenden Maschine ZPL an den jeweiligen Drucker.
 
 ## H. Cupping (roast-archive)
 
 **H1. ⚠️ Was kommt in tosto?**
 Empfehlung: **Die ganze Web-App** (Cuppings, Röstungen, Auswertung, Cupper &
 Sorten). Die Kommandozeile bleibt lokal an Artisan.
-→ Antwort:
+→ Antwort: Die vollständige Web-App soll in tosto verfügbar sein. Wie Artisan eingebunden bzw. künftig genutzt wird, muss noch neu überlegt werden.
 
 **H2. Woher kommen die Röstungen? (später entscheiden)**
 Nur eine Info vorab: Wo liegt der Archivordner mit den `.alog`-Dateien
 (Nextcloud auf welchem Rechner)? Kann der Server ihn erreichen?
-→ Antwort:
+→ Antwort: Noch offen; Hosting und Datenquelle für roast-archive müssen neu geplant werden. labels wurde teilweise für Hosting vorbereitet, roast-archive bisher noch nicht.
 
 **H3. Nach dem Umzug ist der Server der einzige Ort für Cupping-Daten?**
 Empfehlung: **Ja.** Die vorhandenen Dateien werden einmal übernommen, unverändert.
-→ Antwort:
+→ Antwort: Ja, der Server soll nach der Übernahme der Cupping-Daten der einzige Speicherort sein; vorhandene Dateien unverändert übernehmen.
 
 **H4. Cupper mit Konten verbinden?**
 In der Cupping-App gibt es eine Liste von Cuppern (Livia, Julius, Maria …), mit tosto
@@ -279,10 +279,10 @@ kommen Anmelde-Konten dazu. Verbunden hieße: Maria meldet sich an und ist
 automatisch Cupperin „Maria“. Nicht verbunden hieße: Man wählt den Cupper wie heute
 von Hand. Das braucht man für Gäste ohne Konto und wenn sich zwei ein Tablet teilen.
 Empfehlung: **Verbinden möglich, aber keine Pflicht.**
-→ Antwort:
+→ Antwort: Zunächst einfacher Username-/Passwort-Login; nach Anmeldung Zugriff auf alle Funktionen. Bestehende App-Funktionen zunächst beibehalten. Später optional Konten mit Cupper-Namen verknüpfen, z. B. Maria automatisch als Cupperin auswählen.
 
 **H5. Name der Kachel: „Cupping“, „Röstarchiv“ oder anders?**
-→ Antwort:
+→ Antwort: Noch offen; Namen später festlegen.
 
 ## I. Vorgehen
 
@@ -294,4 +294,4 @@ Empfehlung: **Verbinden möglich, aber keine Pflicht.**
 5. Sicherung, Protokolle, Feinschliff.
 
 Empfehlung: **So.**
-→ Antwort:
+→ Antwort: Reihenfolge wie empfohlen. Schnittstellen und Apps so gestalten, dass jede App lokal im Entwicklungsmodus gestartet und getestet werden kann und dabei möglichst identisch zur gehosteten Version in tosto aussieht und funktioniert.

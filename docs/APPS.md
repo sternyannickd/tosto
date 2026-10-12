@@ -22,27 +22,12 @@ mit CSS-Variablen und eine Beispiel-Einbindung (`static/beispiel-einbindung.html
 `POST /api/zpl`, `POST /api/vorschau` (PNG über labelary.com), `POST /api/drucken`,
 `POST /api/testdruck`.
 
-**Plan fürs Portal (aus `initial_prompt.md`):**
+**Plan (Stand 12.10.2026):** labels läuft auf dem Firmenserver als Python-Dienst
+hinter tosto, der Drucker hängt per USB am Server. Gedruckt wird direkt wie heute.
+Der ursprünglich geplante Druckagent mit Warteschlange über das Internet entfällt.
 
-```
-Browser ──► Portal (PHP): Produkte, MHD, EAN-Prüfung, Warteschlange, Protokoll
-                 ▲
-                 │  ausgehend per HTTPS, alle paar Sekunden, Geräte-Token
-                 │
-            Druckagent (Python, im labels-Repo) ──► zpl.py ──► Drucker (USB)
-```
-
-- Der Server schickt **strukturierte Aufträge**, keinen ZPL-Text.
-- Auftragsstatus: wartet / wird gedruckt / gedruckt / Fehler. Nie doppelt drucken.
-- Statusanzeige: Agent erreichbar (Lebenszeichen < ca. 30 s), Drucker bereit.
-  In der App und als Symbol auf der Kachel.
-
-**Was in PHP neu entsteht:** Produktliste lesen, EAN-13-Prüfziffer, MHD-Berechnung,
-Warteschlange, Protokoll, API für Oberfläche und Agent. **Nicht** in PHP: ZPL
-(bleibt beim Agenten).
-
-**Zu klären:** Vorschau (braucht ZPL, das der Server bewusst nicht hat), Verfall
-alter Aufträge, Produktpflege, Notbetrieb ohne Internet. Siehe Fragenkatalog F.
+**Zu klären** (in labels, siehe `../labels/TOSTO.md`): Vorschau, Pfade und Start
+als Dienst, Produktpflege in der Web-App.
 
 ## Cupping (`../roast-archive`)
 
@@ -70,22 +55,21 @@ unverändert in `archive/`. Flavour Wheels als JSON (`wheels/buch.json`, `sca.js
 `participant/*`, `sheet/patch`, `roast/*`, `cupper/*`, `coffee/*`, `settings`).
 Mehrere Geräte gleichen alle 5 s ab, Speichern ohne Knopf mit Wiederholung.
 
-**Was fürs Portal nötig ist:**
+**Plan (Stand 12.10.2026):** Die Web-App läuft auf dem Firmenserver als
+Python-Dienst hinter tosto, das JSON-Format 4 bleibt, die vorhandenen Daten werden
+übernommen. Die Oberfläche wird zum Web Component `<cupping-app>` (heute globale
+Stile, feste Pfade `/css`, `/js`, `/api`, Hash-Router auf der Seiten-URL).
 
-- Server-Seite in PHP neu schreiben, **JSON-Format 4 beibehalten**, vorhandene
-  Daten übernehmen. Score-Berechnung (SCA-104 §5.5) und Prüfregeln aus Python nach
-  PHP übertragen, gegen dieselben Testfälle prüfen.
-- Oberfläche zum Web Component `<cupping-app>` umbauen (heute globale Stile,
-  feste Pfade `/css`, `/js`, `/api`, Hash-Router auf der Seiten-URL).
-- **Röstungskatalog:** Heute liest die App `.alog`-Dateien aus einem Ordner. Auf dem
-  Server gibt es diese Dateien nicht, und PHP müsste das Python-Format erst lesen
-  lernen. Siehe Fragenkatalog G2.
+**Zu klären** (in roast-archive, siehe `../roast-archive/TOSTO.md`): woher die
+Röstungen (`.alog`) auf dem Server kommen (Frage H2), Aufwand für den Umbau.
 
 ## Neue App aufnehmen (Checkliste, Entwurf)
 
 1. App hält `KONVENTIONEN.md` ein (Web Component, `api`-Attribut, CSS-Variablen,
    `GET status`).
-2. `apps/<id>/app.json` anlegen, PHP-API unter `apps/<id>/`.
+2. Manifest `app.json` im App-Repo, App läuft als eigener Dienst.
 3. Recht `<id>` an die Benutzer vergeben, die die App sehen sollen.
 4. Datenordner `<daten>/apps/<id>/` wird beim ersten Start angelegt.
-5. Eintrag in dieser Datei und in der Tabelle in `README.md`.
+5. Schnittstelle einrichten: `../<app>/TOSTO.md`, `schnittstelle/<app>.md`, Zeile in
+   `.claude/schnittstelle.json` (siehe `schnittstelle/README.md`).
+6. Eintrag in dieser Datei und in der Tabelle in `README.md`.

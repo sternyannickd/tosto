@@ -1,6 +1,7 @@
 # Konventionen für Apps im Portal
 
-> **Entwurf vom 07.10.2026, noch nicht freigegeben.** Grundlage: `initial_prompt.md`
+> **Entwurf vom 07.10.2026, angepasst am 12.10.2026 an den Firmenserver, noch nicht
+> freigegeben.** Grundlage: `initial_prompt.md`
 > und die Antworten in [`fragen/01-portal.md`](fragen/01-portal.md). Bis zur Freigabe
 > kann sich hier alles ändern.
 
@@ -15,8 +16,8 @@ Die App-Repos verweisen in ihrer `CLAUDE.md` auf diese Datei.
 | Teil | Technik | Wo |
 |------|---------|----|
 | **Oberfläche** | ein Web Component (Custom Element), reines JavaScript, kein Build-Schritt | im App-Repo |
-| **Server-Seite** | JSON-API in PHP | Vorschlag: `apps/<id>/` im Portal-Repo (Frage B2) |
-| **Manifest** | `app.json`: Name, Kachel, Element, API, Statusabfrage | `apps/<id>/app.json` |
+| **Server-Seite** | JSON-API, eigener Dienst (heute Python) | im App-Repo |
+| **Manifest** | `app.json`: Name, Kachel, Element, API, Start, Statusabfrage | im App-Repo (Frage E2) |
 
 Eine App setzt **keinen bestimmten Server** voraus. Sie kennt nur die Adresse ihrer
 API, die ihr per Attribut übergeben wird.
@@ -35,7 +36,7 @@ API, die ihr per Attribut übergeben wird.
   relativ zu ihrer Skriptdatei (`new URL("app.css", import.meta.url)`).
 - **Keine globalen Seiteneffekte:** kein Schreiben in `document.title`, keine
   globalen Stile, keine globalen Variablen. Navigation innerhalb der App über den
-  Hash oder internen Zustand, nie über die Seiten-URL der einbindenden Seite (Frage G4).
+  Hash oder internen Zustand, nie über die Seiten-URL der einbindenden Seite.
 - **Abhängigkeiten:** keine Fremdbibliotheken aus dem Internet (CDN). Wenn eine
   nötig ist, liegt sie im App-Repo.
 
@@ -63,9 +64,11 @@ kommen nur hier hinzu, nicht still in einer App.
 ## 4. Anmeldung: macht die einbindende Seite
 
 - Die App hat **keine eigene Anmeldung** und keine Login-Maske.
-- Die PHP-API der App fragt die Anmeldung über eine kleine Schnittstelle ab,
-  z. B. `Auth::aktuellerBenutzer(): ?Benutzer` und `Auth::darf(string $recht): bool`.
-  Das Portal liefert eine Umsetzung, eine andere Website später ihre eigene.
+- Auf dem Firmenserver prüft tosto die Anmeldung **zentral vor jeder Anfrage**
+  (Frage E1). Die App bekommt Benutzer und Rechte als Kopfzeilen vom Webserver
+  (Vorschlag: `X-Tosto-Benutzer`, `X-Tosto-Rechte`) und ist selbst nur über
+  `127.0.0.1` erreichbar. Eine andere einbindende Website liefert später dieselben
+  Angaben auf ihre Weise.
 - **Schreibende Anfragen** (POST/PUT/DELETE) tragen ein CSRF-Token im Kopf
   `X-CSRF-Token`. Die einbindende Seite stellt es bereit (Vorschlag: `<meta
   name="csrf-token">`), die App liest es von dort.
@@ -81,13 +84,13 @@ kommen nur hier hinzu, nicht still in einer App.
 - **Jede Eingabe wird auf dem Server geprüft**, auch wenn die Oberfläche schon
   prüft.
 - Jede App bietet `GET <api>/status` an: `{"ok": true|false, "meldung": "…"}`.
-  Daraus macht das Portal das Symbol auf der Kachel (Frage B6).
+  Daraus macht das Portal das Symbol auf der Kachel (Frage E3).
 
 ## 6. Daten
 
 - Ablage in **JSON-Dateien** im Datenordner außerhalb des Webverzeichnisses,
   pro App ein Unterordner: `<daten>/apps/<id>/`.
-- Lesen und Schreiben nur über die Ablage-Klasse des Portals: **atomar**
+- Schreiben immer **atomar**
   (temporäre Datei + `rename`) und mit **`flock`**-Sperre.
 - Jede Datei trägt ein Feld `format_version`. Ändert sich das Format, gibt es eine
   Übernahme (Migration), die die alte Datei unverändert sichert.
@@ -115,5 +118,5 @@ Druckagenten kommt in `docs/API-DRUCKAGENT.md`.
 }
 ```
 
-Eine neue App = ein neuer Ordner unter `apps/` plus ihre Oberflächendateien. Am
+Eine neue App = ein neuer Dienst plus ihr Manifest. Am
 Portal-Kern ändert sich dafür nichts.

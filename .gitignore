@@ -6,7 +6,11 @@
 # Composer
 /vendor/
 
-# lokale Dateien
+# lokale Dateien, sensible Ausgaben (Server-Fakten usw.)
+/lokal/
+*.pem
+*.key
+id_*
 ausgabe_ssh.txt
 .claude/settings.local.json
 .vscode/

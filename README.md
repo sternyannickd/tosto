@@ -3,37 +3,38 @@
 **T**ools **O**f **S**pecialty **T**asting & r**O**asting
 
 Das Portal für die Web-Apps der Rösterei: ein Login, danach eine Kachel pro App.
-Nur für Mitarbeitende.
+Nur für Mitarbeitende, nur im Netz der Rösterei:
+`https://tosto.internal.stern-kaffee.de`.
 
-> **Stand 07.10.2026:** Planungsphase, noch kein Code.
-> Offene Fragen: [`fragen/01-portal.md`](fragen/01-portal.md).
+> **Stand 12.10.2026:** Planungsphase, noch kein Code. Hosting auf dem
+> Firmenserver ist entschieden. Offene Fragen:
+> [`fragen/01-portal.md`](fragen/01-portal.md).
 
 ## Apps
 
 | App | Repo | Status |
 |-----|------|--------|
-| Etikettendruck | `labels` | läuft lokal am Drucker, Einbindung geplant (Milestone 1) |
-| Cupping | `roast-archive` | läuft lokal, Einbindung geplant (Milestone 1) |
+| Etikettendruck | `labels` | läuft lokal am Drucker, Einbindung geplant |
+| Cupping | `roast-archive` | läuft lokal, Einbindung geplant |
 
 Weitere Apps folgen. Wie eine App ins Portal kommt, regelt
-[`KONVENTIONEN.md`](KONVENTIONEN.md).
+[`KONVENTIONEN.md`](KONVENTIONEN.md). Wie die Projekte miteinander reden:
+[`schnittstelle/README.md`](schnittstelle/README.md).
 
 ## Technik in einem Satz
 
-PHP auf einem Plesk-Webspace, JSON-Dateien statt Datenbank, Apps als Web
-Components ohne Build-Schritt, Design über CSS-Variablen.
+Firmenserver (AlmaLinux) im Netz der Rösterei, Webserver mit HTTPS davor, tosto
+übernimmt die Anmeldung, jede App läuft als eigener Python-Dienst, JSON-Dateien
+statt Datenbank, Oberflächen als Web Components ohne Build-Schritt.
 
-## Projektstruktur (Vorschlag, siehe Fragenkatalog C)
+## Ordner
 
 ```
-public/      Webverzeichnis: nur Einstiegspunkt, CSS, JS, Bilder
-src/         PHP-Logik des Portals (Anmeldung, Sitzung, Ablage, Router)
-apps/        ein Ordner pro App: Manifest und PHP-API der App
-config/      Beispielkonfiguration (die echte liegt außerhalb des Webverzeichnisses)
-scripts/     Kommandozeile: Konten anlegen, Bereitstellung, Backup
-docs/        Architektur, Hosting, Entscheidungen, App-Übersicht
-fragen/      Fragenkataloge
+docs/          Hosting, Entscheidungen, App-Übersicht
+fragen/        Fragenkataloge
+schnittstelle/ Nachrichten der Apps an tosto
+scripts/       Skripte, z. B. server-fakten.sh
+lokal/         sensible Ausgaben (Server-Fakten), nie im Git
 ```
 
-Auf dem Server liegen **Daten und Konfiguration außerhalb** des Webverzeichnisses,
-z. B. `/var/www/vhosts/<domain>/tosto-daten/`.
+Die Ordner für den Code kommen mit dem Plan.

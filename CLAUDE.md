@@ -3,7 +3,8 @@
 **TOSTO** steht für **T**ools **O**f **S**pecialty **T**asting & r**O**asting.
 Im Code, in Pfaden und Adressen klein: `tosto`.
 
-`tosto` ist die Website (Subdomain auf dem Plesk-Webspace), über die alle kleinen
+`tosto` ist die Website (`https://tosto.internal.stern-kaffee.de`, nur im Netz der
+Rösterei), über die alle kleinen
 Web-Apps der Rösterei mit **einem Login** erreichbar sind: Anmeldung, danach eine
 Übersicht mit Kacheln, eine Kachel pro App. Die Apps leben in **eigenen Repos** und
 bleiben dort. Das Portal liefert Anmeldung, Design, Datenablage und die Server-Seite.
@@ -22,7 +23,7 @@ Entscheidungen in [`docs/ENTSCHEIDUNGEN.md`](docs/ENTSCHEIDUNGEN.md).
 |-------|--------|
 | [`KONVENTIONEN.md`](KONVENTIONEN.md) | Der Vertrag für alle Apps (Web Component, API, Design, Anmeldung). Die App-Repos verweisen darauf. |
 | [`docs/APPS.md`](docs/APPS.md) | Welche Apps es gibt, wo sie liegen, was beim Einbinden zu tun ist |
-| [`docs/HOSTING.md`](docs/HOSTING.md) | Fakten zum Server (PHP-Version, Erweiterungen, Pfade) |
+| [`docs/HOSTING.md`](docs/HOSTING.md) | Firmenserver: Fakten, Aufbau, Aufgaben (DNS, VM, HTTPS) |
 | [`docs/ENTSCHEIDUNGEN.md`](docs/ENTSCHEIDUNGEN.md) | Was entschieden ist und warum, offene Punkte |
 | [`fragen/`](fragen/) | Fragenkataloge mit Empfehlung und Antwortzeile |
 | [`schnittstelle/`](schnittstelle/) | Nachrichten der Apps an tosto, Regeln der Schnittstelle |
@@ -40,10 +41,11 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
 
 ## Feste Rahmenbedingungen
 
-- **Hosting noch offen (Frage A0):** Plesk (dann **nur PHP**, kein Node.js, kein
-  Python) oder der eigene Firmenserver (AlmaLinux, dann Python möglich). Siehe
-  `docs/HOSTING.md`. Kein Build-Schritt: was im Repo liegt, wird
-  so ausgeliefert.
+- **Hosting: Firmenserver** (Minisforum, AlmaLinux, FreeIPA-Domain-Controller),
+  nur im Netz der Rösterei. Die Apps bleiben **Python**, der Drucker hängt per USB
+  am Server. Weil der Server Domain Controller ist, laufen die Apps **abgeschottet**
+  (Vorschlag: eigene VM, Frage B1). Siehe `docs/HOSTING.md`.
+- **Kein Build-Schritt:** was im Repo liegt, wird so ausgeliefert.
 - **Keine Datenbank.** JSON-Dateien, atomar geschrieben (temporäre Datei + `rename`)
   und mit `flock` gesperrt.
 - **Daten, Konfiguration und Geheimnisse liegen außerhalb des Webverzeichnisses**,
@@ -51,8 +53,8 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
 - **Sicherheit hat Vorrang.** Nur Mitarbeitende der Rösterei. Keine
   Selbstregistrierung. Argon2id, optionale TOTP-2FA, CSRF-Schutz, Sperre nach
   Fehlversuchen, Sicherheits-Header, Login-Protokoll.
-- **Wenige Abhängigkeiten.** Composer-Pakete nur, wo es um Sicherheit geht (z. B.
-  TOTP), und nur bewährte, gepflegte Pakete.
+- **Wenige Abhängigkeiten.** Fremde Pakete nur, wo es um Sicherheit geht, und nur
+  bewährte, gepflegte.
 - **Frontend:** reines JavaScript als Web Components (Custom Elements), Design über
   CSS-Variablen.
 
@@ -82,4 +84,11 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
 - **Ein Thema je Sitzung** (Plan, Subdomain, Login, …). Der Stand muss deshalb
   immer in den Dateien stehen, nicht nur im Chat: Entscheidungen in
   `docs/ENTSCHEIDUNGEN.md`, Server-Aufgaben in `docs/HOSTING.md`.
+- **Sensible Daten** (IP-Adressen, Rechnernamen, Ausgaben vom Server) liegen nur
+  in **`lokal/`** (im `.gitignore`, wird nie committet). Daraus nur allgemeine
+  Fakten in committete Dateien übernehmen (z. B. „AlmaLinux 9, Python 3.12“), nie
+  Adressen, Benutzernamen oder Schlüssel. Passwörter und private Schlüssel braucht
+  Claude nie und fragt nicht danach.
+- **Kein Zugang zum Domain Controller für Claude.** Befehle, die root brauchen,
+  bereitet Claude vor und erklärt sie, der Nutzer führt sie aus.
 - Vor einer Bereitstellung auf den Server immer nachfragen.

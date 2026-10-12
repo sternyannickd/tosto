@@ -60,6 +60,9 @@ probier lsusb
 probier ls -l /dev/usb/
 probier id
 
+abschnitt "sudo ohne Passwort möglich? (prüft nur, führt nichts aus)"
+if sudo -n true 2>/dev/null; then echo ja; else echo nein; fi
+
 abschnitt "Zeit"
 probier timedatectl
 

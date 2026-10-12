@@ -3,6 +3,20 @@
     "additionalDirectories": [
       "C:\\Users\\yannickdengler\\Documents\\claude projects\\labels",
       "C:\\Users\\yannickdengler\\Documents\\claude projects\\roast-archive"
+    ],
+    "ask": [
+      "Bash(ssh:*)",
+      "Bash(scp:*)",
+      "Bash(sftp:*)",
+      "Bash(rsync:*)",
+      "Bash(ssh.exe:*)",
+      "Bash(scp.exe:*)",
+      "Bash(/c/Windows/System32/OpenSSH/ssh.exe:*)",
+      "Bash(/c/Windows/System32/OpenSSH/scp.exe:*)",
+      "PowerShell(ssh:*)",
+      "PowerShell(scp:*)",
+      "PowerShell(ssh.exe:*)",
+      "PowerShell(scp.exe:*)"
     ]
   },
   "hooks": {

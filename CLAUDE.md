@@ -89,6 +89,10 @@ verstreut. Eine neue App darf keine Änderung am Portal-Kern erfordern.
   Fakten in committete Dateien übernehmen (z. B. „AlmaLinux 9, Python 3.12“), nie
   Adressen, Benutzernamen oder Schlüssel. Passwörter und private Schlüssel braucht
   Claude nie und fragt nicht danach.
-- **Kein Zugang zum Domain Controller für Claude.** Befehle, die root brauchen,
-  bereitet Claude vor und erklärt sie, der Nutzer führt sie aus.
+- **Server-Zugang:** Claude arbeitet per SSH (`/c/Windows/System32/OpenSSH/ssh.exe ipa`,
+  Schlüssel im Windows-Agent). **Jeder Befehl wird vom Nutzer bestätigt.** Skripte
+  per `ssh ipa 'sh -s' < skript`, nichts auf dem Server liegen lassen. Der Server ist
+  der **Domain Controller**: dort nur das Nötigste ändern, jede Änderung vorher
+  erklären, Netzwerkänderungen nur, wenn jemand vor Ort ist. Details:
+  `docs/HOSTING.md`.
 - Vor einer Bereitstellung auf den Server immer nachfragen.

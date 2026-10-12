@@ -60,16 +60,29 @@ seinem eigenen Webserver bereits die Ports 80 und 443.
   Etwas weniger Aufwand, aber dieselbe Maschine wie FreeIPA, und für HTTPS braucht
   es eine zweite IP-Adresse oder FreeIPAs Webserver als Vermittler.
 
-Empfehlung: **(a) VM.** Sicherheit hat Vorrang, und die eigene IP-Adresse löst das
-Port-Problem sauber.
+Ergebnis der Server-Fakten: Ports 80/443 sind tatsächlich belegt. Für (a) braucht
+der Server eine **Netzwerkbrücke**, damit die VM eine eigene Adresse hat und trotzdem
+FreeIPA erreicht. Das ist eine Änderung am Netz des Domain Controllers und sollte
+passieren, **wenn jemand vor Ort ist**, falls die Verbindung abbricht (B9).
+Empfehlung: **(a) VM.** Sicherheit hat Vorrang, und die eigene Adresse löst das
+Port-Problem sauber. Die Leistung reicht locker (28 GB RAM, 16 Threads).
 → Antwort:
 
-**B2. ⚠️ Wer führt die Befehle auf dem Server aus?**
-Empfehlung: **Alles, was root braucht** (VM anlegen, Pakete, Firewall, DNS in
-FreeIPA), **führst du aus**, ich bereite die Befehle vor und erkläre sie. Ich
-bekomme **nie Zugang zum Domain Controller**. Später, in der VM, bekomme ich per
-SSH-Schlüssel höchstens einen Benutzer `tosto` ohne root-Rechte, um Apps
-bereitzustellen. Passwörter und private Schlüssel gibst du mir nie.
+**B2. ✅ Wer führt die Befehle auf dem Server aus?**
+→ Antwort: Claude per SSH von diesem PC aus, jeden Befehl bestätige ich.
+
+**B2.1. ⚠️ Wie bekommt Claude root-Rechte für die Einrichtung?**
+`sudo` fragt nach dem Passwort von `serveradmin`, und das bekommt Claude nicht.
+- (a) **Befristete Regel:** Du führst einmal in deinem eigenen Terminal einen Befehl
+  aus, der `serveradmin` für die Einrichtung `sudo` ohne Passwort erlaubt (Datei
+  `/etc/sudoers.d/90-tosto-einrichtung`). Danach wird sie wieder gelöscht. Jeder
+  Befehl bleibt bestätigungspflichtig.
+- (b) **Du führst jeden root-Befehl selbst aus** und gibst das Passwort ein. Sicherer,
+  aber genau das, was du vermeiden willst.
+
+Empfehlung: **(a)**, befristet auf die Einrichtung am Domain Controller (VM, Brücke).
+In der VM bekommt Claude später einen eigenen Benutzer, da ist das weniger heikel,
+weil die VM vom Domain Controller getrennt ist.
 → Antwort:
 
 **B3. Wie kommt neuer Code auf den Server?**
@@ -92,10 +105,17 @@ Kopie nicht auf dem Server selbst.
 labelary.com)?**
 → Antwort:
 
-**B7. Fakten zum Server:** Bitte `scripts/server-fakten.sh` auf dem Server ausführen
-(nur lesend, kein root nötig) und die Ausgabe nach `lokal/server-fakten.txt` legen.
-Der Ordner `lokal/` kommt nie ins Git. Damit bestätigen wir auch Python 3.12.
-→ Erledigt:
+**B7. ✅ Fakten zum Server**
+→ Erledigt am 12.10.2026, Zusammenfassung in `docs/HOSTING.md`. Python 3.12 ✔.
+
+**B8. Auf dem Server läuft bereits nginx (und es gibt eine Gruppe `ccc-release`).
+Wofür? Gehört das zu deinem anderen Projekt?**
+Wozu: Damit tosto nichts in die Quere kommt.
+→ Antwort:
+
+**B9. Kommt jemand an den Server heran, falls bei der Einrichtung die
+Netzwerkverbindung abbricht (Bildschirm und Tastatur anstecken)?**
+→ Antwort:
 
 ## C. DNS und HTTPS
 
@@ -109,11 +129,19 @@ Sonst: Zertifikat von der FreeIPA-Zertifizierungsstelle, das dann auf jedem Ger�
 einmal installiert werden muss.
 → Antwort:
 
-**C2. Welcher Router steht in der Rösterei (Modell), und wer verteilt heute die
-IP-Adressen (DHCP): Router oder FreeIPA?**
-Wozu: Tablets und Handys fragen meist den Router nach Namen. Damit sie
-`tosto.internal.stern-kaffee.de` finden, leitet der Router die Anfragen an FreeIPA
-weiter oder kennt den Namen selbst. Das richten wir gemeinsam ein.
+**C2. ⚠️ Wie finden Tablets und Handys die Adresse?**
+Die Adressen im Netz sehen nach einer **FritzBox** aus. Tablets und Handys fragen
+die FritzBox nach Namen, die Mint-PCs vermutlich FreeIPA. Eine FritzBox kann
+Anfragen nicht gezielt an FreeIPA weiterreichen.
+- (a) **Eintrag im öffentlichen DNS** von `stern-kaffee.de`: `tosto.internal` zeigt
+  auf die interne Adresse. Geht auf jedem Gerät sofort, die FritzBox braucht nur
+  eine Ausnahme beim „DNS-Rebind-Schutz“. Die interne Adresse ist dann öffentlich
+  lesbar, verrät aber wenig.
+- (b) Die FritzBox verteilt **FreeIPA als DNS-Server** an alle Geräte. Dann hängt
+  das Internet aller Geräte am Server.
+
+Empfehlung: **(a)**, einfach und robust. Bitte bestätigen: Ist es eine FritzBox, und
+kommst du an die Verwaltung der Domain (siehe C1)?
 → Antwort:
 
 ## D. Anmeldung und Sicherheit

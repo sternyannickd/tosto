@@ -28,12 +28,13 @@ beantwortet).
 | P1 | Rolle des Projekts | tosto platziert die Apps auf dem Server. Die Apps werden in ihren eigenen Repos entwickelt (08.10.2026). |
 | P2 | Arbeitsweise | Fragen werden **in der Datei** beantwortet. Nach jedem Schritt committen und pushen. Ein Thema je Sitzung (08.10.2026). |
 | P3 | Schnittstelle | Die Projekte sprechen über Schnittstellen-Dateien: tosto schreibt `../<app>/TOSTO.md`, die App schreibt `schnittstelle/<app>.md`. Jede Datei hat einen Schreiber, der Empfänger committet. Ein Hook sperrt alles andere (12.10.2026). |
-| P4 | Sensible Daten | Server-Ausgaben, IP-Adressen und Rechnernamen nur in `lokal/` (nie im Git). Claude bekommt keine Passwörter, keine privaten Schlüssel und keinen Zugang zum Domain Controller (12.10.2026). |
+| P4 | Sensible Daten | Server-Ausgaben, IP-Adressen und Rechnernamen nur in `lokal/` (nie im Git). Claude bekommt keine Passwörter und keine privaten Schlüssel (12.10.2026). |
+| B2 | Server-Zugang | Claude führt die Befehle per SSH von diesem PC aus, **jeder SSH-Befehl muss bestätigt werden**. root-Rechte: Frage B2.1 (12.10.2026). |
 | G1 | Alte Druckaufträge | Verfallen nach **30 Minuten**, falls es eine Warteschlange gibt (08.10.2026). |
 | G2 | Vorschau | **Die Web-App bekommt eine Vorschau.** Umsetzung entscheidet labels (T2 in `../labels/TOSTO.md`). |
 
 ## Offene Punkte
 
-- Alles in `fragen/01-portal.md`, zuerst die mit ⚠️: A2, B1, B2, C1, D1, E1, F1, H1.
+- Alles in `fragen/01-portal.md`, zuerst die mit ⚠️: A2, B1, B2.1, C1, C2, D1, E1, F1, H1.
 - **H2** Woher die Röstungen (`.alog`) auf dem Server kommen: wird später entschieden.
 - Mit welchem System die Website des Chefs läuft (blockiert nichts).
